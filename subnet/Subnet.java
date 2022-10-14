@@ -7,42 +7,47 @@ package subnet;
  */
 
 import java.util.*;
-import java.math.BigInteger;
 
 public class Subnet {
-    private static String input; 
-
-    // Constructor Subnet
-    public Subnet(String input) {
-        this.input = input;
-    }
-
-    // Declare private variables 
+    // Declare private variables
+    private static String input;
+    private static String[] args;
     private static long IPAddress = 0L;
     private static String IP = " ";
     private static int prefix = 0; 
     private static int count = 0;
+    
+    // Constructor Subnet. Catch and throw Exceptions to main() in Calculator.java
+    public Subnet(String input) throws Exception {
+        this.input = input;
+        storeInput();
+        try {
+            errorHandling();
+        } catch (Exception e) {
+            throw new Exception();
+        }
+    }
+
+    // Store user input into private variables 
+    private static void storeInput() {
+        args = input.split("\\.|/");
+        String[] str = input.split("/");
+        IP = str[0];
+        IPAddress = stringToLong(IP);
+        prefix = Integer.parseInt(str[1]);
+    }
 
     // Check for errors with CIDR notation and throw exceptions if there are any. 
     private static void errorHandling() throws Exception {
-        String[] segments = IP.split("\\.");
-        int[] seg = new int[4];
         int check = 1;
-        for (int i = 0; i < segments.length; i++) {
-            seg[i] = Integer.parseInt(segments[i]);
-            if (seg[i] > 255 | seg[i] < 0) {
-                check = 0; 
-            }
+        for (int i = 0; i < args.length; i++) {
+            if (Integer.parseInt(args[i]) > 255 | Integer.parseInt(args[i]) < 0) check = 0;
         }
-      
+        
         // Throw Exceptions
-        if (prefix > 32 || prefix < 0 || prefix == 0) {
-            throw new Exception();
-        } else if (!(segments.length ==4)) {
-            throw new Exception();
-        } else if (check == 0) {
-            throw new Exception();
-        }
+        if (args.length != 5) throw new Exception();
+        if (prefix > 32 || prefix < 0) throw new Exception();
+        if (check == 0) throw new Exception();
     }
 
     // Convert String to long 
@@ -67,35 +72,23 @@ public class Subnet {
         return sJoined;
     }
     
-    // Returns Address (String) depending on whether getFirstUsableAddress or getLastUsableAddress was called 
+    // Returns useable address (String) depending on whether getFirstUsableAddress or getLastUsableAddress was called 
     private static String useableAddress(long addressLong) {
-        long firstOctet = (addressLong >> 24) & 0xFF;
-        long secondOctet = (addressLong >> 16) & 0xFF; 
-        long thirdOctet = (addressLong >> 8) & 0xFF;
-        long fourthOctet = 0;
+        long a = (addressLong >> 24) & 0xFF;
+        long b = (addressLong >> 16) & 0xFF; 
+        long c = (addressLong >> 8) & 0xFF;
+        long d = 0;
         if (count == 1) { 
-            fourthOctet = ((addressLong) + 1) & 0xFF; 
+            d = ((addressLong) + 1) & 0xFF; 
         } else if (count == 2) {
-            fourthOctet = ((addressLong) - 1) & 0xFF; 
+            d = ((addressLong) - 1) & 0xFF; 
         }
-        String useableAddress = firstOctet + "." + secondOctet + "." + thirdOctet + "." + fourthOctet;
+        String useableAddress = a + "." + b + "." + c + "." + d;
         return useableAddress; 
     }
 
-    // Store user input values. Return IP Address (String)
+    // Return IP Address (String)
     public static String getIP() {
-        String[] str = input.split("/");
-        IP = str[0];
-        IPAddress = stringToLong(IP);
-        prefix = Integer.parseInt(str[1]);
-        
-        try {
-            errorHandling(); 
-        } catch (Exception e) {
-            System.out.println("Invalid CIDR notation!");
-            System.out.println("Usage: java subnet.SubnetCalculator IP/PREFIX");
-            System.exit(0);
-        }
         return IP; 
     }
 
@@ -114,17 +107,13 @@ public class Subnet {
         }
     }
 
-    // Get number of useable IP Addresses
-    public static String getNumUsableIPs() {
-        int numUsableIPs = (int) Math.pow(2, (32-prefix)) -2;
+    // Get number (long) of useable IP Addresses 
+    public static long getNumUsableIPs() {
+        long numUsableIPs = (long) Math.pow(2, (32-prefix)) -2;
         if (numUsableIPs < 0) {
             numUsableIPs = 0;
         }
-        if (prefix == 0) {
-            return "4294967296";
-        } else {
-            return String.valueOf(numUsableIPs);
-        }
+        return numUsableIPs;
     }
 
     // Calculate network address by using bitwise operation
