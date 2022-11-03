@@ -7,16 +7,19 @@ The program computes the netmask, network address, broadcast address, first and 
 It converts a string (IP address) to a long value, and performs bitwise operations to calculate netmask, network address, and broadcast address. It converts the long value back to a string value to print statements. 
 
 ## Instructions
-Clone the repository in your local terminal and cd into the subnetCalculator directory. 
+Clone the repository in your local terminal
 
     $ git clone git@github.com:ajzno26/subnetCalculator.git
+    
+cd into the subnetCalculator directory
+
     $ cd subnetCalculator
 
 Makefile to build the application
 
     $ make 
 
-Provide a CIDR value when running the java application in the terminal. 
+Provide a CIDR notation subnet when running the java application in the terminal. 
 
 For example, 
 
