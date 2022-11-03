@@ -1,13 +1,8 @@
 package subnet;
 
-/** 
- * Class to represent a subnet.
- *
- * @version 1.0
- */
-
 import java.util.*;
 
+// Class to represent a subnet.
 public class Subnet {
     // Declare private variables
     private static String input;
