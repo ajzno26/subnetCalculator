@@ -4,7 +4,7 @@
 
 The program computes the netmask, network address, broadcast address, first and last usable addresses, and the number of usable IPs given the CIDR notation subnet. 
 
-It converts the string IP address to a long, and performs bitwise operations to calculate netmask, network address, and broadcast address. It converts the long value back to a string value to print statements. 
+It converts a string (IP address) to a long value, and performs bitwise operations to calculate netmask, network address, and broadcast address. It converts the long value back to a string value to print statements. 
 
 ## Instructions
 Clone the repository in your local terminal and cd into the subnetCalculator directory. 
