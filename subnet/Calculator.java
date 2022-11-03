@@ -6,7 +6,7 @@ public class Calculator {
     // Main method that uses the Subnet class to display subnet information.
     public static void main(String[] args) {
 
-        /* we must have a single argument */
+        // Only accept a single argument 
         if(args.length != 1) {
             System.out.println("Usage: java subnet.Calculator IP/PREFIX");
             System.exit(0);
@@ -23,7 +23,7 @@ public class Calculator {
             System.out.println("Last Usable Address: " + subnet.getLastUsableAddress());
             System.out.println("Broadcast Address: " + subnet.getBroadcastAddress());
         } catch(Exception e) {
-            /* any validation errors will throw an Exception */
+            // Any validation errors will throw an Exception
             System.out.println("Invalid CIDR notation!");
             System.out.println("Usage: java subnet.SubnetCalculator IP/PREFIX");
             System.exit(0);
