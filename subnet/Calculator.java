@@ -1,16 +1,9 @@
 package subnet;
 
-/** 
- * main Class for a Subnet Calculator.
- *
- * @version 1.0
- */
+// main Class for a Subnet Calculator.
 public class Calculator {
-
-    /**
-     * Main method that uses the Subnet class to display subnet information.
-     * @param args subnet in CIDR notation
-     */
+    
+    // Main method that uses the Subnet class to display subnet information.
     public static void main(String[] args) {
 
         /* we must have a single argument */
