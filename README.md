@@ -4,7 +4,20 @@
 
 The program computes the netmask, network address, broadcast address, first and last usable addresses, and the number of usable IPs given the CIDR notation subnet. 
 
-It converts a string (IP address) to a long value, and performs bitwise operations to calculate netmask, network address, and broadcast address. It converts the long value back to a string value to print statements. 
+It converts the IP Address (string) to a long value, and performs bitwise operations to calculate netmask, network address, and broadcast address. It converts the long value back to a string value to print statements.
+
+Netmask: shift each octect and bitwise AND operation 
+
+        int shift = 0xffffffff << (32 - prefix); 
+        int firstOct = (shift >> 24) & 0xFF; 
+        int secondOct = (shift >> 16) & 0xFF;
+        int thirdOct = (shift >> 8) & 0xFF; 
+        int fourthOct = shift & 0xFF; 
+        String netmask = firstOct + "." + secondOct + "." + thirdOct + "." + fourthOct; 
+        
+Network Address: bitwise AND operation --> IP Address (long) & netmask (long) 
+
+Broadcast address: bitwise OR operation --> IP Address (long) | inverted netmask (long)
 
 ## Instructions
 Clone the repository in your local terminal
